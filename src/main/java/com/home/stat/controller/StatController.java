@@ -21,9 +21,9 @@ public class StatController {
     @GetMapping("/start")
     public ResponseEntity<String> startStat() {
         if (fileHandler.handle()) {
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("Done", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

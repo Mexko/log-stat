@@ -7,8 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 public class FileHandlerImpl implements FileHandler {
@@ -32,7 +30,7 @@ public class FileHandlerImpl implements FileHandler {
         LOG.info("Start handle log files from folder {}", logFolderPath);
         var logFolder = new File(logFolderPath);
         var logFiles = logFolder.listFiles();
-        if (logFiles == null) {
+        if (logFiles == null || logFiles.length == 0) {
             LOG.info("There are no files in folder {}", logFolderPath);
             return false;
         }

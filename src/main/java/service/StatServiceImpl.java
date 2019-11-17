@@ -1,8 +1,6 @@
 package service;
 
 import com.home.stat.model.Event;
-import groovy.util.logging.Log;
-import groovy.util.logging.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
