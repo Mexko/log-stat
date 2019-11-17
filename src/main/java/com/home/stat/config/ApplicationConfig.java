@@ -1,6 +1,6 @@
 package com.home.stat.config;
 
-import com.home.stat.service.*;
+import service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

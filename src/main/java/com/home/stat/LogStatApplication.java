@@ -1,6 +1,6 @@
 package com.home.stat;
 
-import com.home.stat.service.FileHandler;
+import service.FileHandler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
