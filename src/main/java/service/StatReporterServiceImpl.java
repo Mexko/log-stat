@@ -63,7 +63,7 @@ public class StatReporterServiceImpl implements StatReporterService {
 
     private double medium(List<Integer> counter) {
         double medium = ((1d + counter.size()) / 2d) - 1;
-        if (medium % 10 > 0) {
+        if (medium % 1 > 0) {
             var i = (int) medium;
             var a = counter.get(i);
             i++;

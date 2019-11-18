@@ -48,6 +48,7 @@ public class FileHandlerImpl implements FileHandler {
     }
 
     private void handleFile(File file) throws IOException {
+
         try (Stream<String> stream = Files.lines(Paths.get(file.getAbsolutePath()))) {
             stream.forEach(s ->
                     statService.addEvent(lineParser.parse(s))
