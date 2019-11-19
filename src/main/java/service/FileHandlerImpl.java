@@ -34,12 +34,13 @@ public class FileHandlerImpl implements FileHandler {
             LOG.info("There are no files in folder {}", logFolderPath);
             return false;
         }
+        statService.clear();
         for (var file : logFiles) {
             LOG.info("Get file {}", file.getName());
             try {
                 handleFile(file);
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ex) {
+                LOG.error(ex.getMessage(), ex);
                 return false;
             }
         }
@@ -48,7 +49,6 @@ public class FileHandlerImpl implements FileHandler {
     }
 
     private void handleFile(File file) throws IOException {
-
         try (Stream<String> stream = Files.lines(Paths.get(file.getAbsolutePath()))) {
             stream.forEach(s ->
                     statService.addEvent(lineParser.parse(s))

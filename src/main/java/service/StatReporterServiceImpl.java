@@ -33,21 +33,28 @@ public class StatReporterServiceImpl implements StatReporterService {
                 .append("\t50%=")
                 .append(medium(counter))
                 .append("\t90%=")
-                .append(numberOfElementsLessThenPercent(counter, 90))
+                .append(getElementFromListSizePercent(counter, 90))
                 .append("\t99%=")
-                .append(numberOfElementsLessThenPercent(counter, 99))
+                .append(getElementFromListSizePercent(counter, 99))
                 .append("\t99.9%=")
-                .append(numberOfElementsLessThenPercent(counter, 99.9));
+                .append(getElementFromListSizePercent(counter, 99.9));
 
+        //Grouping table
         result.append("\nExecTime\tTransNo\tWeight,%\tPercent");
         var countMultipleFive = 0;
+        var start = 0;
+        var end = 0;
         for (var i = 0; i < counter.size(); i++) {
-            if (counter.get(i) % 5 == 0) {
+            if (start <= counter.get(i) && counter.get(i) <= end) {
+                countMultipleFive++;
+            } else {
+                start = (int) (counter.get(i) / 5d) * 5;
+                end = start + 4;
                 countMultipleFive++;
             }
-            if (countMultipleFive != 0 && (i == counter.size() - 1 || counter.get(i) < counter.get(i + 1))) {
+            if (i == counter.size() - 1 || counter.get(i + 1) > end) {
                 result.append("\n")
-                        .append(counter.get(i))
+                        .append(start)
                         .append("\t")
                         .append(countMultipleFive)
                         .append("\t")
@@ -62,28 +69,21 @@ public class StatReporterServiceImpl implements StatReporterService {
     }
 
     private double medium(List<Integer> counter) {
-        double medium = ((1d + counter.size()) / 2d) - 1;
-        if (medium % 1 > 0) {
-            var i = (int) medium;
-            var a = counter.get(i);
-            i++;
-            if (counter.size() <= i) {
-                return a;
-            } else {
-                var b = counter.get(i);
-                return ((a + b) / 2d);
-            }
+        double mediumIndex = (counter.size() - 1) / 2d;
+        if (mediumIndex % 1 > 0) {//even number of elements
+            var i = (int) mediumIndex;
+            return average(counter.get(i), counter.get(i + 1));
         } else {
-            return counter.get((int) medium);
+            return counter.get((int) mediumIndex);
         }
     }
 
-    private int numberOfElementsLessThenPercent(List<Integer> counter, double percent) {
-        var moreElementPercent = 1d - percent / 100d;
-        if (moreElementPercent * counter.size() >= 1) {
-            return counter.get(counter.size() - 1 - (int) (moreElementPercent * counter.size()));
-        } else {
-            return counter.get(counter.size() - 1) + 1;
-        }
+    private double average(int a, int b) {
+        return (a + b) / 2d;
+    }
+
+    private int getElementFromListSizePercent(List<Integer> counter, double percent) {
+        var i = (int) Math.ceil(counter.size() * percent / 100d) - 1;
+        return counter.get(i);
     }
 }

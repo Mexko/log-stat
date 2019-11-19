@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface StatService {
+    void clear();
+
     void addEvent(Event event);
 
     Map<String, List<Integer>> getPool();

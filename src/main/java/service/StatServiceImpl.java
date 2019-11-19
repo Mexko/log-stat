@@ -14,6 +14,10 @@ public class StatServiceImpl implements StatService {
 
     private Map<String, List<Integer>> pool = new HashMap<>();
 
+    public void clear() {
+        pool = new HashMap<>();
+    }
+
     public void addEvent(Event event) {
         if (event == null) {
             return;
